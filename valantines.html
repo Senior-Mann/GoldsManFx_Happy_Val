@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoldsManFx · XAUUSD Valentine</title>
+    <!-- Font Awesome for icons (chart, gold, love, tradingview) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0b0c1a 0%, #1a1e30 100%);
+            color: #f0e9ff;
+            position: relative;
+            overflow-x: hidden;
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        /* floating background icons (tradingview / chart small icons) */
+        .floating-bg-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-icon {
+            position: absolute;
+            color: rgba(255, 215, 0, 0.12);
+            font-size: 1.8rem;
+            opacity: 0.35;
+            user-select: none;
+            animation: floatDrop 18s infinite linear;
+            z-index: 0;
+        }
+
+        /* different sizes, delays, left positions */
+        .bg-icon:nth-child(1) { left: 5%; top: -10%; animation-duration: 22s; font-size: 2rem; opacity: 0.25; }
+        .bg-icon:nth-child(2) { left: 15%; top: -5%; animation-duration: 19s; font-size: 2.7rem; opacity: 0.2; animation-delay: 2s; }
+        .bg-icon:nth-child(3) { left: 25%; top: -15%; animation-duration: 24s; font-size: 2.2rem; opacity: 0.3; animation-delay: 1s; }
+        .bg-icon:nth-child(4) { left: 40%; top: -20%; animation-duration: 21s; font-size: 3rem; opacity: 0.15; animation-delay: 3s; }
+        .bg-icon:nth-child(5) { left: 55%; top: -8%; animation-duration: 26s; font-size: 1.9rem; opacity: 0.25; animation-delay: 1.5s; }
+        .bg-icon:nth-child(6) { left: 70%; top: -12%; animation-duration: 20s; font-size: 2.8rem; opacity: 0.2; animation-delay: 0.5s; }
+        .bg-icon:nth-child(7) { left: 85%; top: -18%; animation-duration: 23s; font-size: 2.5rem; opacity: 0.3; animation-delay: 2.5s; }
+        .bg-icon:nth-child(8) { left: 92%; top: -25%; animation-duration: 28s; font-size: 2rem; opacity: 0.2; animation-delay: 4s; }
+        .bg-icon:nth-child(9) { left: 12%; top: -30%; animation-duration: 25s; font-size: 3.3rem; opacity: 0.18; animation-delay: 0.2s; }
+        .bg-icon:nth-child(10) { left: 48%; top: -22%; animation-duration: 27s; font-size: 2.4rem; opacity: 0.25; animation-delay: 3.2s; }
+        .bg-icon:nth-child(11) { left: 77%; top: -35%; animation-duration: 30s; font-size: 2.1rem; opacity: 0.2; animation-delay: 0.8s; }
+        .bg-icon:nth-child(12) { left: 63%; top: -40%; animation-duration: 29s; font-size: 3.5rem; opacity: 0.15; animation-delay: 1.2s; }
+
+        @keyframes floatDrop {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0.35; }
+        }
+
+        /* main content above floating layer */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ----- header (left/right) ----- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1rem 1.2rem;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .goldsman {
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f9e281, #d4af37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            letter-spacing: 2px;
+        }
+
+        .xauusd-head {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: #1e2a47;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            box-shadow: 0 0 25px rgba(255, 140, 0, 0.6);
+            color: #ffb347;
+            border: 2px solid gold;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        /* middle title with chart icons */
+        .valentine-title {
+            text-align: center;
+            margin: 2rem 0 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .valentine-title h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            background: linear-gradient(130deg, #ff8899, #ffb6c1, #ffd966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px #ff3366;
+            letter-spacing: 2px;
+        }
+
+        .chart-icon {
+            font-size: 3rem;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+        .chart-red { color: #ef476f; }
+        .chart-blue { color: #1e90ff; }
+
+        /* two row layout */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            margin: 3.5rem 0 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* left column (picture / XAUUSD) */
+        .left-col {
+            flex: 1 1 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .right-col {
+            flex: 1 1 400px;
+            padding: 1rem 2rem;
+        }
+
+        /* profile pic colourful circle (candle colours) */
+        .profile-circle {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ef476f 20%, #1e90ff 50%, #f3b33d 80%);
+            padding: 8px;
+            box-shadow: 0 0 40px rgba(255, 80, 120, 0.7), 0 0 30px #1e90ff;
+            animation: softGlow 3s infinite alternate;
+        }
+
+        .profile-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #0b0c1a;
+            display: block;
+        }
+
+        @keyframes softGlow {
+            0% { box-shadow: 0 0 30px #ef476f, 0 0 20px #1e90ff; }
+            100% { box-shadow: 0 0 60px #1e90ff, 0 0 40px #ef476f; }
+        }
+
+        /* message bubble right of picture (first poem) */
+        .poem-message {
+            background: rgba(10, 15, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 40px 40px 40px 10px;
+            padding: 2rem 2.2rem;
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.7);
+            color: #ffe9c7;
+            max-width: 550px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .poem-message i {
+            color: #ffb703;
+            margin-right: 8px;
+        }
+
+        /* second row: XAUUSD cycle + gold icons / loves */
+        .gold-cycle {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffd966, #996633);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 50px gold;
+            border: 4px solid #ffd966;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gold-cycle .main-symbol {
+            font-size: 4rem;
+            color: white;
+            text-shadow: 0 0 10px #b8860b;
+            z-index: 3;
+        }
+        .gold-cycle span {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff0c0;
+            z-index: 3;
+        }
+
+        .falling-icons-inside {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .inside-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.5rem;
+            animation: fallInside 5s infinite linear;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 5px gold);
+        }
+
+        .inside-icon:nth-child(1) { left: 20%; animation-duration: 4.2s; animation-delay: 0s; }
+        .inside-icon:nth-child(2) { left: 45%; animation-duration: 5.5s; animation-delay: 0.5s; font-size: 2rem; }
+        .inside-icon:nth-child(3) { left: 70%; animation-duration: 4.8s; animation-delay: 1.2s; }
+        .inside-icon:nth-child(4) { left: 30%; animation-duration: 6s; animation-delay: 2s; color: #ffb3b3; }
+        .inside-icon:nth-child(5) { left: 55%; animation-duration: 5s; animation-delay: 2.8s; font-size: 1.8rem; }
+        .inside-icon:nth-child(6) { left: 15%; animation-duration: 4s; animation-delay: 1s; color: #ffe066; }
+        .inside-icon:nth-child(7) { left: 80%; animation-duration: 6.5s; animation-delay: 0.2s; }
+        .inside-icon:nth-child(8) { left: 62%; animation-duration: 5.8s; animation-delay: 3s; }
+        .inside-icon:nth-child(9) { left: 8%; animation-duration: 7s; animation-delay: 2.2s; }
+        .inside-icon:nth-child(10) { left: 88%; animation-duration: 4.5s; animation-delay: 1.7s; }
+
+        @keyframes fallInside {
+            0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+            15% { opacity: 1; }
+            100% { transform: translateY(250px) rotate(360deg); opacity: 0; }
+        }
+
+        /* right side gold messages */
+        .gold-messages {
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(10px);
+            border-radius: 50px 20px 50px 20px;
+            padding: 2.2rem 2rem;
+            border-left: 8px solid #f1c40f;
+            box-shadow: 0 20px 30px -8px black;
+        }
+
+        .gold-msg-line {
+            font-size: 1.5rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed rgba(255, 215, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .gold-msg-line:last-child {
+            border-bottom: none;
+        }
+
+        .gold-msg-line i {
+            color: #ffd966;
+            font-size: 2rem;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .valentine-title h1 { font-size: 2.5rem; }
+            .poem-message { font-size: 1.3rem; }
+        }
+        @media (max-width: 600px) {
+            .header { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- floating background tradingview icons -->
+<div class="floating-bg-icons">
+    <div class="bg-icon"><i class="fas fa-chart-line"></i></div>
+    <div class="bg-icon"><i class="fas fa-chart-bar"></i></div>
+    <div class="bg-icon"><i class="fas fa-chart-pie"></i></div>
+    <div class="bg-icon"><i class="fas fa-chart-area"></i></div>
+    <div class="bg-icon"><i class="fas fa-candlestick-chart"></i></div>
+    <div class="bg-icon"><i class="fas fa-chart-simple"></i></div>
+    <div class="bg-icon"><i class="fas fa-coins"></i></div>
+    <div class="bg-icon"><i class="fas fa-crown"></i></div>
+    <div class="bg-icon"><i class="fas fa-arrow-trend-up"></i></div>
+    <div class="bg-icon"><i class="fas fa-arrow-trend-down"></i></div>
+    <div class="bg-icon"><i class="fas fa-chart-gantt"></i></div>
+    <div class="bg-icon"><i class="fas fa-chart-scatter"></i></div>
+</div>
+
+<main class="main-content">
+    <!-- header -->
+    <div class="header">
+        <div class="goldsman"><i class="fas fa-crown" style="color: #f9e281; margin-right: 8px;"></i>GoldsManFx</div>
+        <div class="xauusd-head">XAUUSD</div>
+    </div>
+
+    <!-- middle title -->
+    <div class="valentine-title">
+        <i class="fas fa-chart-line chart-icon chart-red"></i>
+        <h1>❤️ Happy Valentine's ❤️</h1>
+        <i class="fas fa-chart-line chart-icon chart-blue"></i>
+    </div>
+
+    <!-- FIRST ROW: profile pic + poem -->
+    <div class="row" style="justify-content: space-evenly;">
+        <!-- left side: profile circle with YOUR photo -->
+        <div class="left-col" style="gap:1rem;">
+            <div class="profile-circle">
+                <!-- MAKE SURE THIS FILE IS IN THE SAME FOLDER AS YOUR HTML -->
+                <img src="My favorite photo-1.jpg" alt="Your pic">
+                <!-- If it's still not showing, try using a full URL or check file name -->
+            </div>
+        </div>
+        <!-- right side: poem -->
+        <div class="right-col">
+            <div class="poem-message">
+                <i class="fas fa-quote-left"></i> In the market of love, you're my best trade,<br>
+                The only investment I've ever made.<br>
+                No stop-loss could take my heart away,<br>
+                With you, I'm bullish every single day. <i class="fas fa-quote-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECOND ROW: XAUUSD cycle + messages -->
+    <div class="row" style="margin-top: 1rem;">
+        <div class="left-col">
+            <div class="gold-cycle">
+                <div class="main-symbol"><i class="fas fa-coins"></i></div>
+                <span>XAUUSD</span>
+                <div class="falling-icons-inside">
+                    <div class="inside-icon"><i class="fas fa-coins"></i></div>
+                    <div class="inside-icon"><i class="fas fa-heart" style="color: #ff6b8b;"></i></div>
+                    <div class="inside-icon"><i class="fas fa-coins"></i></div>
+                    <div class="inside-icon"><i class="fas fa-heart" style="color: #ffb3ba;"></i></div>
+                    <div class="inside-icon"><i class="fas fa-crown"></i></div>
+                    <div class="inside-icon"><i class="fas fa-heart" style="color: #ff4d6d;"></i></div>
+                    <div class="inside-icon"><i class="fas fa-coins"></i></div>
+                    <div class="inside-icon"><i class="fas fa-heart" style="color: #ffb3c6;"></i></div>
+                    <div class="inside-icon"><i class="fas fa-coins"></i></div>
+                    <div class="inside-icon"><i class="fas fa-heart" style="color: #ff6b8b;"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="right-col">
+            <div class="gold-messages">
+                <div class="gold-msg-line"><i class="fas fa-coins"></i> "You're my XAUUSD - pure gold in my life"</div>
+                <div class="gold-msg-line"><i class="fas fa-hourglass-half"></i> "Like gold, my love for you is precious and timeless"</div>
+                <div class="gold-msg-line"><i class="fas fa-medal"></i> "In a world of fiat love, you're my gold standard"</div>
+                <div class="gold-msg-line"><i class="fas fa-gem"></i> "My heart trades only in XAUUSD - pure and valuable"</div>
+                <div class="gold-msg-line"><i class="fas fa-handshake"></i> "You're the gold to my USD - the perfect pair"</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- footer -->
+    <div style="text-align: center; margin-top: 3.5rem; color: #d4af37; opacity: 0.8; font-size: 1.3rem; border-top: 1px solid rgba(255,215,0,0.3); padding-top: 1.5rem;">
+        <i class="fas fa-chart-candlestick"></i> forever bullish on us <i class="fas fa-heart" style="color: #ff6b8b;"></i> XAUUSD
+    </div>
+</main>
+
+</body>
+</html>
